@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <title>Agenda Oficina</title>
+  <meta name="description" content="Agendamentos e lista de espera dos clientes da oficina">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#18181B" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)">
+
+  <!-- Instalação como app (Android, iPhone e computador) -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Agenda Oficina">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ícones usados no app (desenhados uma vez e reaproveitados com <use>) -->
+  <svg xmlns="http://www.w3.org/2000/svg" hidden>
+    <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chave" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+    <symbol id="i-calendario" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-agendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/></symbol>
+    <symbol id="i-espera" viewBox="0 0 24 24"><path d="M7 3h10M7 21h10M8 3v3.5a4 4 0 0 0 1.8 3.3L12 11.5l2.2-1.7A4 4 0 0 0 16 6.5V3M8 21v-3.5a4 4 0 0 1 1.8-3.3l2.2-1.7 2.2 1.7a4 4 0 0 1 1.8 3.3V21"/></symbol>
+    <symbol id="i-telefone" viewBox="0 0 24 24"><path d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mensagem" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.2z"/></symbol>
+    <symbol id="i-lixo" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12.5A1.5 1.5 0 0 0 8.5 21h7a1.5 1.5 0 0 0 1.5-1.5L18 7M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/></symbol>
+    <symbol id="i-lapis" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
+    <symbol id="i-baixar" viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-subir" viewBox="0 0 24 24"><path d="M12 16V5M7 9.5l5-5 5 5M5 20h14"/></symbol>
+    <symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 16l-4-4 4-4M6 12h10"/></symbol>
+    <symbol id="i-historico" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6L3.5 8.5"/><path d="M3.5 4v4.5H8"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-desfazer" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+    <symbol id="i-celular" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 7v7M9 11l3 3 3-3"/></symbol>
+    <symbol id="i-alerta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></symbol>
+    <symbol id="i-olho" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-falta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+    <symbol id="i-remarcar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15.2a3 3 0 1 0 1-2.4M9.2 12.2v1.8H11"/></symbol>
+  </svg>
+
+  <!-- Tela: abrindo -->
+  <section id="telaCarregando" class="tela tela-cheia visivel" aria-live="polite">
+    <div class="carregando">
+      <span class="girando" aria-hidden="true"></span>
+      <p>Abrindo a agenda…</p>
+    </div>
+  </section>
+
+  <!-- Tela: entrar (só no modo compartilhado) -->
+  <section id="telaLogin" class="tela tela-cheia" hidden>
+    <div class="cartao-login">
+      <p class="marca marca-escura"><svg aria-hidden="true"><use href="#i-chave"/></svg>Agenda Oficina</p>
+      <h1>Entrar</h1>
+      <p class="login-texto">Use o e-mail e a senha de acesso da oficina.</p>
+      <form id="formLogin" novalidate>
+        <div class="campo">
+          <label for="loginEmail">E-mail</label>
+          <input id="loginEmail" type="email" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false">
+        </div>
+        <div class="campo">
+          <label for="loginSenha">Senha</label>
+          <div class="campo-senha">
+            <input id="loginSenha" type="password" autocomplete="current-password" autocapitalize="characters" spellcheck="false">
+            <button type="button" class="mostrar-senha" id="mostrarSenha" aria-label="Mostrar senha" aria-pressed="false">
+              <svg aria-hidden="true"><use href="#i-olho"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="login-erro" id="loginErro" role="alert"></p>
+        <button class="btn btn-acao btn-grande" id="btnEntrar" type="submit">Entrar</button>
+      </form>
+      <p class="login-rodape">Você só precisa entrar uma vez em cada aparelho.</p>
+    </div>
+  </section>
+
+  <!-- Tela: algo deu errado ao abrir -->
+  <section id="telaErro" class="tela tela-cheia" hidden>
+    <div class="cartao-login">
+      <p class="marca marca-escura"><svg aria-hidden="true"><use href="#i-chave"/></svg>Agenda Oficina</p>
+      <h1 id="erroTitulo">Não foi possível abrir a agenda</h1>
+      <p class="login-texto" id="erroTexto"></p>
+      <button class="btn btn-acao btn-grande" id="btnTentarDeNovo" type="button">Tentar de novo</button>
+    </div>
+  </section>
+
+  <!-- Tela principal -->
+  <div id="app" class="tela app" hidden>
+    <header class="topo">
+      <div class="topo-linha">
+        <p class="marca"><svg aria-hidden="true"><use href="#i-chave"/></svg>Agenda Oficina</p>
+        <button class="status" id="status" type="button" data-tipo="local">
+          <span class="status-ponto" aria-hidden="true"></span><span id="statusTexto">Neste aparelho</span>
+        </button>
+        <button class="btn-icone" id="btnMenu" type="button" aria-label="Abrir menu">
+          <svg aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+
+      <div class="resumo">
+        <p class="resumo-data" id="resumoData"></p>
+        <p class="resumo-texto" id="resumoTexto"></p>
+        <div class="resumo-linha">
+          <div class="progresso" id="progresso" role="progressbar" aria-label="Concluídos hoje" aria-valuemin="0" hidden><span></span></div>
+          <p class="resumo-detalhe" id="resumoDetalhe"></p>
+        </div>
+      </div>
+
+      <nav class="abas" role="tablist" aria-label="Seções">
+        <button class="aba" type="button" role="tab" id="abaAgenda" data-aba="agenda" aria-selected="true" aria-controls="lista">Agenda</button>
+        <button class="aba" type="button" role="tab" id="abaEspera" data-aba="espera" aria-selected="false" aria-controls="lista" tabindex="-1">
+          Lista de espera <span class="contador" id="contadorEspera" hidden>0</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="conteudo">
+      <div class="busca">
+        <svg aria-hidden="true"><use href="#i-busca"/></svg>
+        <input type="search" id="busca" placeholder="Buscar cliente pelo nome" autocomplete="off" enterkeyhint="search" aria-label="Buscar cliente pelo nome">
+        <button class="busca-limpar" id="buscaLimpar" type="button" aria-label="Limpar busca" hidden>
+          <svg aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <div id="avisos"></div>
+      <div id="lista" class="lista" role="tabpanel" aria-labelledby="abaAgenda"></div>
+    </main>
+
+    <button class="fab" id="btnNovo" type="button">
+      <svg aria-hidden="true"><use href="#i-mais"/></svg><span>Novo agendamento</span>
+    </button>
+  </div>
+
+  <!-- Fundo escuro atrás das gavetas -->
+  <div class="fundo" id="fundo" hidden></div>
+
+  <!-- Gaveta: novo / editar agendamento -->
+  <section class="gaveta" id="gavetaForm" role="dialog" aria-modal="true" aria-labelledby="formTitulo" hidden>
+    <div class="gaveta-alca" aria-hidden="true"></div>
+    <div class="gaveta-topo">
+      <h2 id="formTitulo">Novo agendamento</h2>
+      <button class="btn-icone" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+
+    <form id="formAgendamento" novalidate>
+      <p class="nota" id="notaEspera" hidden>Cliente da lista de espera. Ao salvar, ele sai da lista e entra na agenda.</p>
+
+      <div class="campo" id="campoNome">
+        <label for="fNome">Nome do cliente</label>
+        <input id="fNome" type="text" autocomplete="off" autocapitalize="words" enterkeyhint="done" maxlength="80">
+        <p class="campo-erro" id="erroNome"><svg aria-hidden="true"><use href="#i-alerta"/></svg><span></span></p>
+      </div>
+
+      <div class="campo" id="campoData">
+        <span class="campo-rotulo" id="rotuloData">Data</span>
+        <div class="atalhos" role="group" aria-labelledby="rotuloData">
+          <button type="button" class="chip" data-dia="0" aria-pressed="false">Hoje</button>
+          <button type="button" class="chip" data-dia="1" aria-pressed="false">Amanhã</button>
+          <input id="fData" type="date" class="input-data" aria-label="Escolher outra data">
+        </div>
+        <p class="campo-ajuda" id="dataExtenso"></p>
+        <p class="campo-erro" id="erroData"><svg aria-hidden="true"><use href="#i-alerta"/></svg><span></span></p>
+      </div>
+
+      <div class="campo">
+        <label for="fHora">Hora <span class="opcional">opcional</span></label>
+        <div class="linha-hora">
+          <input id="fHora" type="time" step="300">
+          <button type="button" class="btn-texto" id="limparHora">Sem hora</button>
+        </div>
+      </div>
+
+      <div class="campo">
+        <span class="campo-rotulo" id="rotuloServico">Serviço <span class="opcional">opcional</span></span>
+        <div class="chips" id="chipsServico" role="group" aria-labelledby="rotuloServico"></div>
+        <div class="campo-outro" id="campoOutro" hidden>
+          <div><input id="fOutro" type="text" placeholder="Qual serviço?" maxlength="60" enterkeyhint="done" aria-label="Qual serviço?"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-acao btn-grande" id="btnSalvar">Salvar agendamento</button>
+      <button type="button" class="btn-texto btn-centro" id="btnParaEspera">
+        <svg aria-hidden="true"><use href="#i-espera"/></svg>Sem data? Colocar na lista de espera
+      </button>
+    </form>
+
+    <div class="salvo" id="telaSalvo" hidden>
+      <div class="salvo-cabeca">
+        <svg class="selo" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="22"/><path d="M13.5 22.5l6 6 11-12"/></svg>
+        <div>
+          <h3 id="salvoTitulo">Agendamento salvo</h3>
+          <p class="salvo-resumo" id="salvoResumo"></p>
+        </div>
+      </div>
+      <p class="salvo-rotulo">Adicionar à agenda do celular</p>
+      <div class="salvo-botoes" id="salvoBotoes">
+        <button type="button" class="btn" data-agenda="ics" id="salvoIcs"><svg aria-hidden="true"><use href="#i-calendario"/></svg>Calendário do celular</button>
+        <button type="button" class="btn" data-agenda="google" id="salvoGoogle"><svg aria-hidden="true"><use href="#i-calendario"/></svg>Google Agenda</button>
+      </div>
+      <p class="campo-ajuda" id="salvoDica"></p>
+      <div class="salvo-rodape">
+        <button type="button" class="btn-texto" id="salvoOutro">Agendar outro cliente</button>
+        <button type="button" class="btn-texto" data-fechar>Fechar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gaveta: detalhes de um agendamento -->
+  <section class="gaveta" id="gavetaDetalhe" role="dialog" aria-modal="true" aria-labelledby="detNome" hidden>
+    <div class="gaveta-alca" aria-hidden="true"></div>
+    <div class="gaveta-topo">
+      <h2 id="detNome"></h2>
+      <button class="btn-icone" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <dl class="detalhe-info">
+      <div><dt>Data</dt><dd id="detData"></dd></div>
+      <div><dt>Hora</dt><dd id="detHora"></dd></div>
+      <div><dt>Serviço</dt><dd id="detServico"></dd></div>
+      <div><dt>Situação</dt><dd id="detSituacao"></dd></div>
+    </dl>
+    <div class="detalhe-acoes" id="detAcoes"></div>
+    <button type="button" class="btn btn-secundario btn-largo" id="detEditar"><svg aria-hidden="true"><use href="#i-lapis"/></svg>Editar</button>
+    <p class="salvo-rotulo" id="detRotuloAgenda">Adicionar à agenda do celular</p>
+    <div class="salvo-botoes" id="detBotoes">
+      <button type="button" class="btn" data-agenda="ics" id="detIcs"><svg aria-hidden="true"><use href="#i-calendario"/></svg>Calendário do celular</button>
+      <button type="button" class="btn" data-agenda="google" id="detGoogle"><svg aria-hidden="true"><use href="#i-calendario"/></svg>Google Agenda</button>
+    </div>
+    <button type="button" class="btn-perigo-texto" id="detExcluir"><svg aria-hidden="true"><use href="#i-lixo"/></svg>Excluir agendamento</button>
+  </section>
+
+  <!-- Gaveta: adicionar / editar na lista de espera -->
+  <section class="gaveta" id="gavetaEspera" role="dialog" aria-modal="true" aria-labelledby="esperaTitulo" hidden>
+    <div class="gaveta-alca" aria-hidden="true"></div>
+    <div class="gaveta-topo">
+      <h2 id="esperaTitulo">Adicionar à lista de espera</h2>
+      <button class="btn-icone" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <form id="formEspera" novalidate>
+      <div class="campo" id="campoEsperaNome">
+        <label for="eNome">Nome do cliente</label>
+        <input id="eNome" type="text" autocomplete="off" autocapitalize="words" enterkeyhint="next" maxlength="80">
+        <p class="campo-erro" id="erroEsperaNome"><svg aria-hidden="true"><use href="#i-alerta"/></svg><span></span></p>
+      </div>
+      <div class="campo">
+        <label for="eTelefone">Telefone <span class="opcional">opcional</span></label>
+        <input id="eTelefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 98765-4321" maxlength="30" enterkeyhint="done">
+      </div>
+      <div class="campo">
+        <span class="campo-rotulo" id="rotuloEsperaServico">Serviço <span class="opcional">opcional</span></span>
+        <div class="chips" id="chipsEsperaServico" role="group" aria-labelledby="rotuloEsperaServico"></div>
+        <div class="campo-outro" id="campoEsperaOutro" hidden>
+          <div><input id="eOutro" type="text" placeholder="Qual serviço?" maxlength="60" enterkeyhint="done" aria-label="Qual serviço?"></div>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="eObs">Observação <span class="opcional">opcional</span></label>
+        <input id="eObs" type="text" maxlength="120" placeholder="Ex.: prefere de manhã" enterkeyhint="done">
+      </div>
+      <button type="submit" class="btn btn-acao btn-grande" id="btnSalvarEspera">Adicionar à lista</button>
+    </form>
+  </section>
+
+  <!-- Gaveta: detalhes de quem está na lista de espera -->
+  <section class="gaveta" id="gavetaEsperaDetalhe" role="dialog" aria-modal="true" aria-labelledby="edNome" hidden>
+    <div class="gaveta-alca" aria-hidden="true"></div>
+    <div class="gaveta-topo">
+      <h2 id="edNome"></h2>
+      <button class="btn-icone" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <dl class="detalhe-info">
+      <div><dt>Posição</dt><dd id="edPosicao"></dd></div>
+      <div><dt>Na espera desde</dt><dd id="edDesde"></dd></div>
+      <div><dt>Telefone</dt><dd id="edTelefone"></dd></div>
+      <div><dt>Serviço</dt><dd id="edServico"></dd></div>
+      <div><dt>Observação</dt><dd id="edObs"></dd></div>
+    </dl>
+    <button type="button" class="btn btn-acao btn-largo" id="edAgendar"><svg aria-hidden="true"><use href="#i-agendar"/></svg>Agendar</button>
+    <div class="detalhe-acoes" id="edContato">
+      <a class="btn btn-secundario" id="edLigar" href="#"><svg aria-hidden="true"><use href="#i-telefone"/></svg>Ligar</a>
+      <a class="btn btn-secundario" id="edWhats" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-mensagem"/></svg>WhatsApp</a>
+    </div>
+    <button type="button" class="btn btn-secundario btn-largo" id="edEditar"><svg aria-hidden="true"><use href="#i-lapis"/></svg>Editar</button>
+    <button type="button" class="btn-perigo-texto" id="edRemover"><svg aria-hidden="true"><use href="#i-lixo"/></svg>Remover da lista de espera</button>
+  </section>
+
+  <!-- Gaveta: menu -->
+  <section class="gaveta" id="gavetaMenu" role="dialog" aria-modal="true" aria-labelledby="menuTitulo" hidden>
+    <div class="gaveta-alca" aria-hidden="true"></div>
+    <div class="gaveta-topo">
+      <h2 id="menuTitulo">Menu</h2>
+      <button class="btn-icone" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="menu-conta" id="menuConta"></div>
+    <ul class="menu-lista">
+      <li><button type="button" id="mHistorico"><svg aria-hidden="true"><use href="#i-historico"/></svg>Quem chegou</button></li>
+      <li><button type="button" id="mFaltas"><svg aria-hidden="true"><use href="#i-falta"/></svg>Faltas<span class="menu-contador" id="contadorFaltas" hidden>0</span></button></li>
+      <li><button type="button" id="mNotificacoes"><svg aria-hidden="true"><use href="#i-sino"/></svg>Ativar aviso do dia</button></li>
+      <li><button type="button" id="mInstalar" hidden><svg aria-hidden="true"><use href="#i-celular"/></svg>Instalar o app</button></li>
+      <li><button type="button" id="mExportar"><svg aria-hidden="true"><use href="#i-baixar"/></svg>Exportar backup</button></li>
+      <li><button type="button" id="mImportar"><svg aria-hidden="true"><use href="#i-subir"/></svg>Importar backup</button></li>
+      <li><button type="button" id="mSair"><svg aria-hidden="true"><use href="#i-sair"/></svg>Sair da conta</button></li>
+    </ul>
+    <p class="menu-versao">Agenda Oficina, versão 1.2</p>
+  </section>
+
+  <!-- Gaveta: concluídos -->
+  <section class="gaveta gaveta-alta" id="gavetaHistorico" role="dialog" aria-modal="true" aria-labelledby="historicoTitulo" hidden>
+    <div class="gaveta-alca" aria-hidden="true"></div>
+    <div class="gaveta-topo">
+      <h2 id="historicoTitulo">Quem chegou</h2>
+      <button class="btn-icone" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div id="historicoLista"></div>
+  </section>
+
+  <!-- Caixa de confirmação -->
+  <div class="dialogo-fundo" id="dialogo" hidden>
+    <div class="dialogo" role="alertdialog" aria-modal="true" aria-labelledby="dialogoTitulo" aria-describedby="dialogoTexto">
+      <h2 id="dialogoTitulo"></h2>
+      <p id="dialogoTexto"></p>
+      <div class="dialogo-botoes">
+        <button type="button" class="btn btn-secundario" id="dialogoCancelar">Cancelar</button>
+        <button type="button" class="btn btn-acao" id="dialogoOk">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagens rápidas -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <input type="file" id="arquivoImportar" accept=".json,application/json" hidden>
+
+  <!-- Ordem importa: configuração, dados, lembretes e, por último, o app -->
+  <script src="firebase-config.js"></script>
+  <script src="dados.js"></script>
+  <script src="lembretes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
