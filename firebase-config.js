@@ -9,8 +9,13 @@
     1. Siga o README.md, Parte 1 (criar o Firebase).
     2. No Firebase, copie o bloco que começa com
          const firebaseConfig = {
-       e termina com
-         };
+  apiKey: "AIzaSyAlst7YaH4y0W6ZjGN707xIOaWsLKD2eI4",
+  authDomain: "agenda-oficina-55d5e.firebaseapp.com",
+  projectId: "agenda-oficina-55d5e",
+  storageBucket: "agenda-oficina-55d5e.firebasestorage.app",
+  messagingSenderId: "387433992599",
+  appId: "1:387433992599:web:71ba4dc8599dfddcbf34d2"
+};
     3. Apague o bloco de exemplo abaixo (de "const" até "};")
        e cole o seu no lugar.
     4. Salve o arquivo.
@@ -20,12 +25,12 @@
 */
 
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyAlst7YaH4y0W6ZjGN707xIOaWsLKD2eI4",
+  authDomain: "agenda-oficina-55d5e.firebaseapp.com",
+  projectId: "agenda-oficina-55d5e",
+  storageBucket: "agenda-oficina-55d5e.firebasestorage.app",
+  messagingSenderId: "387433992599",
+  appId: "1:387433992599:web:71ba4dc8599dfddcbf34d2"
 };
 
 /* Não mexa na linha abaixo. */

@@ -11,7 +11,7 @@
   - Toque na notificação do dia: abre o app.
 */
 
-const VERSAO = 'agenda-oficina-v4';
+const VERSAO = 'agenda-oficina-v5';
 
 const ARQUIVOS = [
   './',
